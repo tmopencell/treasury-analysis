@@ -56,7 +56,7 @@ uk_yield = 0.0445  # Current yield ~4.45%
 linker_par = 100
 linker_T = 49  # Maturity in 2073
 linker_coup = 0.125  # 0.125% coupon
-linker_real_yield = -0.0175  # Current real yield ~-1.75%
+linker_real_yield = 0.0175  # Current real yield ~+1.75%
 inflation_rate = 0.041  # Current RPI inflation ~4.1%
 
 ###########################################
@@ -224,29 +224,34 @@ inflation_changes = np.arange(-4, 4.5, 0.5)  # ±4% range
 nominal_values = []
 real_values = []
 
-# Calculate base prices and breakeven
-base_nominal = linker_price(uk_par, uk_T, uk_yield, 0, uk_coup)
-base_real = linker_price(linker_par, linker_T, linker_real_yield, inflation_rate, linker_coup)
-breakeven = breakeven_inflation(base_nominal, base_real, uk_T, uk_coup, linker_coup)
-
-# Calculate values and percentage differences
+# Calculate total returns (including yield) for different inflation scenarios
 for di in inflation_changes:
-    nominal_price = linker_price(uk_par, uk_T, uk_yield, 0, uk_coup)
-    real_price = linker_price(linker_par, linker_T, linker_real_yield, inflation_rate + di/100, linker_coup)
+    inflation_scenario = inflation_rate + di/100
     
-    # Convert to percentage difference from nominal
-    nominal_pct = 0  # Nominal is reference line
-    real_pct = ((real_price / nominal_price) - 1) * 100
+    # Nominal bond: Fixed £100 redemption with annual coupon reinvestment
+    nominal_return = ((1 + uk_yield) ** uk_T) - 1  # Compound annual return
     
-    nominal_values.append(nominal_pct)
-    real_values.append(real_pct)
+    # Linker: Inflation-adjusted redemption with real yield
+    real_redemption = 100 * (1 + inflation_scenario)**linker_T
+    real_return = ((1 + linker_real_yield) ** linker_T) * (real_redemption/100) - 1
+    
+    # Convert to percentages
+    nominal_values.append(nominal_return * 100)
+    real_values.append(real_return * 100)
+
+# Add breakeven point calculation
+breakeven_idx = np.where(np.abs(np.array(nominal_values) - np.array(real_values)) == 
+                        np.min(np.abs(np.array(nominal_values) - np.array(real_values))))[0][0]
+breakeven_inflation = inflation_changes[breakeven_idx]
 
 plt.figure(figsize=(12, 8))
 plt.style.use('classic')
 
-# Plot percentage differences
-plt.plot(inflation_changes, nominal_values, 'b-', linewidth=2, label='Nominal Gilt (0.5% 2061)')
-plt.plot(inflation_changes, real_values, 'r-', linewidth=2, label='Index-linked Gilt (0.125% 2073)')
+# Plot total return comparison
+plt.plot(inflation_changes, nominal_values, 'b-', linewidth=2, 
+         label=f'Nominal (Fixed {uk_yield*100:.1f}% YTM)')
+plt.plot(inflation_changes, real_values, 'r-', linewidth=2, 
+         label=f'Linker ({linker_real_yield*100:.1f}% Real + Inflation)')
 
 # Reference lines
 plt.axhline(y=0, color='black', linestyle='-', linewidth=0.5)
@@ -256,22 +261,20 @@ plt.axvline(x=0, color='black', linestyle='-', linewidth=0.5)
 plt.axvline(x=0, color='orange', linestyle=':', alpha=0.5, 
             label=f'Current RPI: {inflation_rate*100:.1f}%')
 
-# Add markers for key changes
-for di in range(-3, 4):
-    if di != 0:
-        idx = np.where(inflation_changes == di)[0][0]
-        pct = real_values[idx]
-        plt.plot([di, di], [0, pct], 'k:', alpha=0.5)
-        x_offset = -0.4 if di < 0 else 0.4
-        y_offset = pct * -0.4
-        plt.text(di + x_offset, pct + y_offset, f'{pct:.1f}%',
-                horizontalalignment='right' if di < 0 else 'left',
-                verticalalignment='bottom' if pct > 0 else 'top')
+# Add a text box with the breakeven explanation
+nominal_return = ((1 + uk_yield) ** uk_T) - 1
+breakeven_text = (f'Nominal Bond Total Return: {nominal_return*100:.1f}%\n'
+                 f'Breakeven Inflation: {breakeven_inflation:.1f}%\n'
+                 f'(Where returns equalize)')
+plt.text(0.02, 0.98, breakeven_text, 
+         transform=plt.gca().transAxes,
+         verticalalignment='top',
+         bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
 plt.grid(True, alpha=0.2)
 plt.xlabel('Change in Inflation Rate (%)', fontsize=10)
-plt.ylabel('Price Difference from Nominal (%)', fontsize=10)
-plt.title('Index-linked vs Nominal Gilt Value\nRelative Performance Analysis',
+plt.ylabel('Total Return (%)', fontsize=10)
+plt.title('Total Return Comparison\nIncluding Yield and Inflation Effects',
           fontsize=12, pad=20)
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 
@@ -291,5 +294,4 @@ print(f"  YTM: {uk_yield*100:.2f}%")
 print(f"\nIndex-linked Gilt (0.125% 2073):")
 print(f"  Price: £{base_linker_price:.2f}")
 print(f"  Real Yield: {linker_real_yield*100:.2f}%")
-print(f"\nBreakeven Inflation: {breakeven*100:.2f}%")
-print(f"Current RPI: {inflation_rate*100:.1f}%") 
+print(f"\nCurrent RPI: {inflation_rate*100:.1f}%") 
