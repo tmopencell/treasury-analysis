@@ -124,8 +124,8 @@ This project provides tools to analyze and visualize:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/tmopencell/treasury-analysis.git
-cd treasury-analysis
+git clone https://github.com/tmopencell/bondmath.git
+cd bondmath
 ```
 
 2. Install required packages:
@@ -198,3 +198,108 @@ tmopencell
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## Developed Market Bonds and Inflation-Protected Securities
+
+### UK Government Bonds
+Analysis of ultra-long dated nominal and inflation-linked Gilts, focusing on:
+1. UKT 0.5% 2061 - A low-coupon, long-duration conventional Gilt
+2. UKTI 0.125% 2073 - An ultra-long inflation-linked Gilt
+
+#### Nominal Gilt Analysis
+![UK Gilt Sensitivity](uk_gilt_sensitivity.png)
+- Shows extreme duration risk in ultra-long, low-coupon bonds
+- Price changes are highly asymmetric due to convexity
+- Marks the yield change required to reach par (100 pence)
+- Demonstrates why these bonds are favored by liability-matching investors
+
+#### Inflation-Linked Gilt Analysis
+Three key risk factors analyzed:
+
+1. **Real Yield Sensitivity**
+![UK Linker Sensitivity](uk_linker_sensitivity.png)
+- Shows price response to changes in real yields
+- Demonstrates even greater duration risk than nominal bonds
+- Particularly relevant given current negative real yields
+
+2. **Inflation Sensitivity**
+![UK Inflation Sensitivity](uk_inflation_sensitivity.png)
+- Direct price impact of changing inflation expectations
+- Critical for understanding inflation protection mechanics
+- Shows upside potential in high inflation scenarios
+
+3. **Breakeven Analysis**
+![UK Breakeven Analysis](uk_breakeven_analysis.png)
+- Compares nominal vs inflation-linked bond values
+- Shows breakeven inflation rate (where returns equalize)
+- Includes historical context with recent RPI peaks
+- Helps assess relative value between nominal and real bonds
+
+### Key Market Features
+
+1. **Ultra-Long Duration**
+   - Both bonds have extreme interest rate sensitivity
+   - Small yield changes create large price movements
+   - Convexity effects are particularly pronounced
+   - Critical for pension fund liability matching
+
+2. **Inflation Protection**
+   - Index-linked Gilts provide direct inflation hedge
+   - Principal and coupons adjust with UK RPI
+   - Currently showing negative real yields
+   - Popular with inflation-sensitive investors
+
+3. **Market Context**
+   - Current nominal yield: 4.45% (UKT 0.5% 2061)
+   - Current real yield: -1.75% (UKTI 0.125% 2073)
+   - RPI inflation: 4.1%
+   - Breakeven inflation rate provides market's inflation forecast
+
+4. **Investment Implications**
+   - Duration risk management is crucial
+   - Inflation expectations drive relative value
+   - Negative real yields reflect high inflation protection demand
+   - Breakeven rates help assess relative value
+
+### Understanding Inflation Protection (or "Why Your Money Might Not Buy That Coffee Tomorrow")
+
+Imagine you lend someone $100 today, and they promise to pay you back $105 in a year. Sounds good, right? 
+Well... what if a cup of coffee that costs $5 today costs $6 next year? 🤔
+
+This is where inflation-protected bonds come in, and they're basically the bond market saying "We got you!"
+
+#### How It Works (A Simple Story)
+1. **Regular Bond**: 
+   - You lend $100
+   - Get $2 each year (2% coupon)
+   - Get $100 back at the end
+   - Meanwhile, inflation is eating your lunch (literally!)
+
+2. **Inflation-Protected Bond**:
+   - You lend $100
+   - The $100 grows with inflation
+   - Your coupons grow with inflation
+   - It's like having a tiny economist adjusting your returns daily
+
+#### Real World Example: UKTI 0.125% 2073
+- Looks like a tiny 0.125% coupon (yes, that's not a typo!)
+- But... both principal and coupons adjust with UK RPI
+- If inflation is 4.1%:
+  * Your £100 investment is now worth £104.10
+  * Your coupon is 0.125% of £104.10
+  * Next year, both will adjust again
+  * And again... (for 50 years!)
+
+#### The Plot Twist: Negative Real Yields
+Current real yield of -1.75% means investors are saying:
+- "Inflation protection is so valuable..."
+- "...we'll pay extra for it..."
+- "...even though we know we'll lose 1.75% per year in real terms!"
+- (This is like paying for insurance on your coffee budget 😉)
+
+#### Why This Matters (Beyond Coffee)
+Consider pension funds:
+- Promise to pay retirees for 30+ years
+- Need to match future inflation-linked payments
+- Can't just hope inflation behaves
+- Would rather lose a little in real terms than risk losing a lot in inflation terms
