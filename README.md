@@ -1,6 +1,101 @@
-# Treasury Bond Price Sensitivity Analysis
+# Treasury and Corporate Bond Analysis
 
-A Python tool for analyzing how US Treasury bond prices respond to changes in interest rates, with a focus on the 1.25% Treasury maturing in 2050.
+A Python tool for analyzing bond price sensitivity to market changes, focusing on two case studies:
+1. US Treasury 1.25% 2050 - Pure interest rate risk
+2. Alphabet 2.25% 2060 - Combined interest rate and credit risk
+
+## Understanding Bond Price Sensitivity
+
+### What Makes Bond Prices Move?
+Bond prices change primarily due to two factors:
+1. Interest Rate Changes (affects all bonds)
+2. Credit Risk Changes (affects corporate bonds only)
+
+### Interest Rate Risk and Convexity
+When interest rates change, bond prices move in the opposite direction. This relationship is captured by two key metrics:
+
+1. **Duration**: The first-order (linear) price sensitivity
+   - Example: A duration of 17.89 means a 1% rise in rates should cause a 17.89% price decline
+   - Works well for small rate changes
+   - Simple rule: Price Change ≈ -Duration × Rate Change
+   - Linear approximation becomes less accurate for larger moves
+
+2. **Convexity**: The bond price's curvature effect
+   - Makes bonds more valuable by creating an asymmetric return profile
+   - Helps in two ways:
+     * Limits price declines when rates rise
+     * Enhances price gains when rates fall
+   - More important for longer-dated bonds
+   - Example from our Treasury analysis:
+     * 4% rate rise = 55% price decline
+     * 4% rate fall = 89% price gain
+     * Without convexity, both would be about 72%
+
+![Treasury Price Sensitivity](treasury_sensitivity.png)
+
+### Credit Risk: The Corporate Bond Component
+Corporate bonds face an additional risk: changes in the company's creditworthiness.
+
+1. **Credit Spreads Explained**:
+   - Extra yield investors demand over Treasury rates
+   - Measured in basis points (bps) where 100 bps = 1%
+   - Reflects market's view of company's credit risk
+   - Example: Alphabet's 85 bps spread means investors demand 0.85% extra yield
+   - Fun fact: While negative spreads seem implausible (why pay more for more risk?), 
+     they're not impossible! With Alphabet (AA2/AA+) and the US Treasury (Aaa/AA+) 
+     sharing an S&P rating, we're just one more US downgrade away from some 
+     interesting conversations about what "risk-free" really means! 😉
+
+2. **Credit Spread Sensitivity**
+![Credit Spread Sensitivity](alphabet_spread_sensitivity.png)
+- Shows how Alphabet bond price changes with credit spread moves
+- Wide range (±500bps) captures stress scenarios like:
+  * Credit rating downgrades
+  * Market stress periods
+  * Industry-specific challenges
+- Similar convex shape to interest rate sensitivity
+
+3. **Combined Risk Analysis**
+![Combined Sensitivity](alphabet_combined_sensitivity.png)
+- Real-world scenario analysis
+- Shows five different credit spread scenarios
+- Each line shows rate sensitivity at that spread level
+- Key observations:
+  * Risks can compound (rates up + spreads wider)
+  * Or offset (rates up + spreads tighter)
+  * Stress scenarios often see both moving adversely
+
+4. **Peer Comparison Context**
+![Peer Comparison](alphabet_peer_comparison.png)
+- Compares major tech companies' credit spreads
+- Shows relative market perception of credit risk
+- Tighter spread = Lower perceived risk
+- Current spreads (in bps):
+  * Microsoft (AAA): 82
+  * Apple (AA+): 80
+  * Alphabet (AA2/AA+): 85
+  * Amazon (AA): 88
+
+### Practical Implications
+
+1. **For Investors**:
+   - Long-duration bonds offer higher potential returns but more risk
+   - Credit spread exposure adds another return/risk dimension
+   - Convexity provides some protection against large adverse moves
+   - Need to consider both risks when evaluating corporate bonds
+
+2. **Risk Management**:
+   - Duration measures first-order rate risk
+   - Credit spread duration measures first-order credit risk
+   - Convexity important for large market moves
+   - Combined analysis essential for stress testing
+
+3. **Market Context**:
+   - Current environment features:
+     * Elevated rate volatility
+     * Changing credit conditions
+     * Tech sector evolution
+   - Makes understanding these sensitivities crucial
 
 ## Overview
 
@@ -8,8 +103,6 @@ This project provides tools to analyze and visualize:
 - Price sensitivity to yield changes
 - Modified duration and convexity effects
 - Linear vs actual price approximations
-
-![Treasury Price Sensitivity](treasury_sensitivity.png)
 
 ## Key Features
 
