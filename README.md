@@ -199,6 +199,36 @@ The journey of UK real yields shows a complete regime change:
    - Especially relevant for liability matching
    - (Like having home insurance even when there's no fire forecast 🏠)
 
+
+## TLT Options and Treasury Price Analysis
+
+The iShares 20+ Year Treasury Bond ETF (TLT) provides exposure to long-dated U.S. Treasury bonds, primarily holding Treasury securities that have a remaining maturity greater than 20 years. This makes it a key instrument for:
+- Trading long-duration Treasury exposure
+- Hedging interest rate risk
+- Expressing views on long-term rates
+
+### Analysis Components
+
+This project analyzes three key metrics:
+1. TLT ETF Price - reflects the market value of the underlying Treasury portfolio
+2. Historical Volatility - calculated as 30-day rolling volatility, annualized
+3. Treasury Bond Prices - calculated using real-time yield data
+
+![TLT Analysis](tlt_analysis.png)
+
+### Market Insights
+
+The relationship between these metrics provides valuable insights:
+- Rising volatility often indicates market uncertainty about future rate paths
+- When TLT price diverges from underlying Treasury prices, it may signal changing supply/demand dynamics
+- Periods of high volatility typically correspond to Federal Reserve policy shifts or major economic data releases
+
+The historical volatility of TLT is particularly informative because:
+- Higher volatility suggests market participants are uncertain about long-term rates
+- Low volatility periods often indicate consensus about the rate environment
+- Volatility spikes can precede significant moves in Treasury yields
+
+
 ## Overview
 
 This project provides tools to analyze and visualize:
@@ -264,31 +294,3 @@ tmopencell
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## TLT Options and Treasury Price Analysis
-
-The iShares 20+ Year Treasury Bond ETF (TLT) provides exposure to long-dated U.S. Treasury bonds, primarily holding Treasury securities that have a remaining maturity greater than 20 years. This makes it a key instrument for:
-- Trading long-duration Treasury exposure
-- Hedging interest rate risk
-- Expressing views on long-term rates
-
-### Analysis Components
-
-This project analyzes three key metrics:
-1. TLT ETF Price - reflects the market value of the underlying Treasury portfolio
-2. Historical Volatility - calculated as 30-day rolling volatility, annualized
-3. Treasury Bond Prices - calculated using real-time yield data
-
-![TLT Analysis](tlt_analysis.png)
-
-### Market Insights
-
-The relationship between these metrics provides valuable insights:
-- Rising volatility often indicates market uncertainty about future rate paths
-- When TLT price diverges from underlying Treasury prices, it may signal changing supply/demand dynamics
-- Periods of high volatility typically correspond to Federal Reserve policy shifts or major economic data releases
-
-The historical volatility of TLT is particularly informative because:
-- Higher volatility suggests market participants are uncertain about long-term rates
-- Low volatility periods often indicate consensus about the rate environment
-- Volatility spikes can precede significant moves in Treasury yields
