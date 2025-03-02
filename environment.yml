@@ -1,0 +1,17 @@
+name: bondmath
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - requests
+  - pandas-datareader
+  - libblas
+  - liblapack
+  - pip
+  - pip:
+    - yfinance  # yfinance needs to be installed via pip 
