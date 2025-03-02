@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime, timedelta
 import requests
+from config import ALPHA_VANTAGE_API_KEY
 
 def get_historical_volatility(prices, window=30):
     """Calculate historical volatility from daily returns"""
@@ -19,9 +20,8 @@ def get_tlt_data():
     try:
         hist = web.DataReader('TLT', 'av-daily',
                             start_date, end_date,
-                            api_key='CFFZLL3MH1R3VKB7')
+                            api_key=ALPHA_VANTAGE_API_KEY)
         print("Successfully retrieved TLT data")
-        # Ensure index is datetime
         hist.index = pd.to_datetime(hist.index)
         print("Date range:", hist.index[0], "to", hist.index[-1])
         return hist
@@ -43,7 +43,7 @@ def price_bond(fv, T, ytm, coup, freq=2):
 def get_treasury_yields():
     """Get historical 30Y Treasury yields"""
     try:
-        url = f'https://www.alphavantage.co/query?function=TREASURY_YIELD&interval=daily&maturity=30year&apikey=CFFZLL3MH1R3VKB7'
+        url = f'https://www.alphavantage.co/query?function=TREASURY_YIELD&interval=daily&maturity=30year&apikey={ALPHA_VANTAGE_API_KEY}'
         r = requests.get(url)
         data = r.json()
         

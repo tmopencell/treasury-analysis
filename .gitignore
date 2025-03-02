@@ -1,0 +1,12 @@
+# Configuration files
+config.py
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Generated files
+*.png
+
+# Alpha Vantage API key
+ALPHA_VANTAGE_API_KEY = 'CFFZLL3MH1R3VKB7' 
